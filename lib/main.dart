@@ -7,7 +7,7 @@ import 'hooks/video_player_hook.dart';
 void main() => runApp(
       MaterialApp(
         home: BackgroundVideo(
-          child: Text("..."),
+          child: Text("test"),
         ),
       ),
     );
