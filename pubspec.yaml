@@ -27,4 +27,5 @@ flutter:
   uses-material-design: true
 
   assets:
+    - assets/bridge.mp4
     - assets/sample-mp4-file.mp4
