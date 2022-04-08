@@ -23,39 +23,36 @@ class _VideoPlayerControllerHook extends Hook<VideoPlayerController> {
 
 class _VideoPlayerHookState
     extends HookState<VideoPlayerController, _VideoPlayerControllerHook> {
-  late VideoPlayerController _controller;
+  late VideoPlayerController controller;
 
   @override
   void didUpdateHook(_VideoPlayerControllerHook oldHook) {
     super.didUpdateHook(oldHook);
     if (oldHook.looping != hook.looping) {
-      _controller.setLooping(hook.looping);
+      controller.setLooping(hook.looping);
     }
   }
 
   @override
   void initHook() {
     super.initHook();
-    _controller = VideoPlayerController.asset(hook.dataSource);
-
-    _controller.addListener(() {
-      setState(() {});
-    });
-
-    _controller.setLooping(hook.looping);
-
-    _controller.initialize().then((_) => setState(() {}));
-
-    _controller.play();
+    controller = VideoPlayerController.asset(hook.dataSource)
+      ..initialize().then((_) {
+        controller.setVolume(0.0);
+        controller.setLooping(hook.looping);
+        controller.play();
+        // ensure the first frame is shown after the video is initialized
+        setState(() {});
+      });
   }
 
   @override
   VideoPlayerController build(BuildContext context) {
-    return _controller;
+    return controller;
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    controller.dispose();
   }
 }
